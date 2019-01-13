@@ -21,10 +21,10 @@ module DTK
           if open_parens == 0
             ret << statement
             statement = ''
-          elsif open_parens_diff > 0
+          elsif open_parens > 0
             # nothing else needs to be done; statement << line has been done in above line
           else
-            fail "Unexected that open_parens_diff (#{open_parens_diff}) is < 0"
+            fail "Unexected that open_parens (#{open_parens}) is < 0"
           end
         end
       end
