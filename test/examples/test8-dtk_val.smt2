@@ -53,4 +53,14 @@
 (check-sat)
 (get-model)
 
+(reset)
+(declare-datatypes () ((DTKBaseVal nil (string (string String)) (int (int Int)) (bool (bool Bool)))))
+(declare-datatypes (T) ((DTKVal nil (array (array T)))))
+(declare-const v1 (DTKVal (Array Int DTKBaseVal)))
+(declare-const v2 (DTKVal (Array Int DTKBaseVal)))
+(assert (not (= v1 v2)))
+
+(check-sat)
+(get-model)
+
 
