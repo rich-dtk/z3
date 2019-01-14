@@ -29,26 +29,26 @@
 
 (reset)
 
-(declare-datatypes () ((DTKVal nil (string (s String)) (int (i Int)) (bool (b Bool)) (hash (h DTKHash)) (array (a DTKArray)))
-                       (DTKHashPair (pair (s String) (v DTKVal)))
-                       (DTKHash  (seq (Seq DTKHashPair)))
-                       (DTKArray (seq (Seq DTKVal)))
+(declare-datatypes () ((DTKVal nil (string (string String)) (int (int Int)) (bool (bool Bool)) (hash (hash DTKHash)) (array (array DTKArray)))
+                       (DTKHashPair (pair (key String) (val DTKVal)))
+                       (DTKHash  (seq (seqfoo DTKHashPair)))
+                       (DTKArray (seq (seqfoo DTKVal)))
+                       (DTKFoo (mk-pair (first DTKVal) (second Int)))
                        ))
-
-; does not work                       (DTKHash (s (Array Int DTKHashPair)))))
 
 (declare-const v1 DTKVal)
 (declare-const v2 DTKVal)
 (declare-const h1 DTKHash)
 (declare-const h2 DTKHash)
 (declare-const array1 DTKArray)
+(declare-const seq1 (Seq DTKVal))
+(declare-const foo DTKFoo)
+(assert (= array1 (array v1)))
+(assert (= v1 (first foo)))
 
-(assert (= v1 (hash (seq (pair "" (string ""))))))
 (assert (not (= h1 h2)))
-(assert (is-hash v1))
-(assert (is-hash v2))
-
-;(assert (= a1 (hash (seq seq_hp)))) doesnt work
+(assert (is-array v1))
+(assert (is-array v2))
 
 (check-sat)
 (get-model)
