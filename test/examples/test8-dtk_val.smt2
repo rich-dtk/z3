@@ -9,7 +9,9 @@
 (get-model)
 
 (reset)
-(declare-datatypes () ((Tree leaf (node0 (s String)) (node1 (stringvar String) (value Int) (children TreeList))) (TreeList nil (cons (car Tree) (cdr TreeList)))))
+(declare-datatypes () ((Tree leaf (node0 (s String)) (node1 (stringvar String) (value Int) (children TreeList))) 
+                       (TreeList nil (cons (car Tree) (cdr TreeList)))
+                      ))
 (declare-const t1 Tree)
 (declare-const t2 Tree)
 (declare-const t3 TreeList)
@@ -27,19 +29,22 @@
 
 (reset)
 
-;(declare-datatypes () ((DTKBaseVal nil (string (s String)) (int (i Int)) (bool (b Bool)))))
-;(declare-datatypes () ((DTKVal nil (hash (h (Array String DTKBaseVal))))))
-
-
-(declare-datatypes () ((DTKVal nil (string (s String)) (int (i Int)) (bool (b Bool)) (hash (h DTKHash)))
-                       (DTKHashPair (pair (s String) (b DTKVal)))
-                       (DTKHash  (seq (Seq DTKHashPair)))))
+(declare-datatypes () ((DTKVal nil (string (s String)) (int (i Int)) (bool (b Bool)) (hash (h DTKHash)) (array (a DTKArray)))
+                       (DTKHashPair (pair (s String) (v DTKVal)))
+                       (DTKHash  (seq (Seq DTKHashPair)))
+                       (DTKArray (seq (Seq DTKVal)))
+                       ))
 
 ; does not work                       (DTKHash (s (Array Int DTKHashPair)))))
 
 (declare-const v1 DTKVal)
 (declare-const v2 DTKVal)
-(declare-const seq_hp (Seq DTKHashPair))
+(declare-const h1 DTKHash)
+(declare-const h2 DTKHash)
+(declare-const array1 DTKArray)
+
+(assert (= v1 (hash (seq (pair "" (string ""))))))
+(assert (not (= h1 h2)))
 (assert (is-hash v1))
 (assert (is-hash v2))
 
@@ -47,4 +52,5 @@
 
 (check-sat)
 (get-model)
+
 
